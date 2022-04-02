@@ -8,7 +8,7 @@
 {{-- メイン部分作成 --}}
 @section('content')
 <section class="bg-gray-50 text-gray-600 body-font overflow-hidden">
-    <div class="px-3 py-3 mx-auto">
+    <div class="h-screen overflow-y-scroll px-3 py-3 mx-auto">
         <div class="flex flex-wrap">
             <div class="p-2 flex flex-col items-start">
                 <div class="flex">

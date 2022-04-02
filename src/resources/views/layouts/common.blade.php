@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- App Name --}}
-    <title>{{ config('app.name', 'LaraNews') }}</title>
+    <title>{{ config('app.name', 'Laratto') }}</title>
 
     {{-- Fonts --}}
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
