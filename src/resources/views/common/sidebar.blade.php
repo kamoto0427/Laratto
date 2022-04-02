@@ -1,6 +1,6 @@
 @section('sidebar')
 <div class="flex flex-col w-64 h-full px-4 py-8 bg-blue-50 border-r">
-    <h2 class="text-center text-3xl font-semibold text-gray-800">LaraNews</h2>
+    <h2 class="text-center text-3xl font-semibold text-gray-800">Laratto</h2>
     
     <div class="flex flex-col justify-between flex-1 mt-6">
         <nav>
@@ -34,7 +34,17 @@
             <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md hover:bg-blue-300 hover:text-gray-700"
             href="#">
                 <span>-</span>
-                <span class="mx-4 font-medium">新機能</span>
+                <span class="mx-4 font-medium">カテゴリー</span>
+            </a>
+            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md hover:bg-blue-300 hover:text-gray-700"
+            href="#">
+                <span>-</span>
+                <span class="mx-4 font-medium">カテゴリー</span>
+            </a>
+            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md hover:bg-blue-300 hover:text-gray-700"
+            href="#">
+                <span>-</span>
+                <span class="mx-4 font-medium">カテゴリー</span>
             </a>
         </nav>
     </div>
