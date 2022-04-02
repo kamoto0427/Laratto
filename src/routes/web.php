@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
+use App\Http\Controllers\User\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +14,16 @@ use App\Http\Controllers\TopController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// 総合トップ
-Route::get('/', [TopController::class, 'top'])
-    ->name('top');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+// 総合トップ
+Route::get('/', [TopController::class, 'top'])
+    ->name('top');
+
+// マイページ
+Route::get('/user/{id}/index', [PostController::class, 'index'])
+    ->name('user.index');

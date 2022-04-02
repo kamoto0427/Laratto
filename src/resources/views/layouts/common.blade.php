@@ -28,7 +28,7 @@
         @yield('header')
     </div>
     <div class="flex">
-        <div class="w-1/5">
+        <div class="w-1/6">
             @yield('sidebar')
         </div>
         <main class="w-full">
