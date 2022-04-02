@@ -2,7 +2,7 @@
     <x-auth-card>
 
         <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4 text-center" :errors="$errors" />
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
