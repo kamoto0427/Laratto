@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     /**
-     * 投稿
+     * 投稿リスト
      * 
      * @param int $id ユーザーID
      * @return Response src/resources/views/user/list/index.blade.phpを表示
