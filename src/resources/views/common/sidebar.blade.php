@@ -1,6 +1,6 @@
 @section('sidebar')
 <div class="flex flex-col w-64 h-full px-4 py-8 bg-blue-50 border-r">
-    <h2 class="text-center text-3xl font-semibold text-gray-800">LaraNews</h2>
+    <h2 class="text-center text-3xl font-semibold text-gray-800">Laratto</h2>
     
     <div class="flex flex-col justify-between flex-1 mt-6">
         <nav>

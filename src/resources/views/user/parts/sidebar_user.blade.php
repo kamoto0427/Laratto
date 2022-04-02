@@ -3,7 +3,7 @@
     <div class="bg-amber-100 h-full">
         <div class="flex items-center justify-start pt-6 ml-8">
             <p class="font-bold text-xl">
-                LaraNews
+                Laratto
             </p>
         </div>
         <nav class="mt-6">
