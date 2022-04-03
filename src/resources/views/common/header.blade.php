@@ -17,12 +17,24 @@
           />
         </div>
       </div>
-      <button class="inline-flex text-white items-center bg-emerald-500 border-0 py-1 px-3 mx-2 focus:outline-none hover:bg-emerald-400 rounded text-base mt-4 md:mt-0">
-        <a href="{{ route('register') }}">新規登録</a>
-      </button>
-      <button class="inline-flex text-white items-center bg-emerald-500 border-0 py-1 px-3 mx-2 focus:outline-none hover:bg-emerald-400 rounded text-base mt-4 md:mt-0">
-        <a href="{{ route('login') }}">ログイン</a>
-      </button>
+      {{-- 認証によって、ボタン表示の切り替え --}}
+      @auth
+      {{-- ユーザー新規登録・ログイン済みならマイページ、ログアウト表示 --}}
+        <button class="inline-flex text-white items-center bg-emerald-500 border-0 py-1 px-3 mx-2 focus:outline-none hover:bg-emerald-400 rounded text-base mt-4 md:mt-0">
+          <a href="">マイページ</a>
+        </button>
+        <button class="inline-flex text-white items-center bg-red-500 border-0 py-1 px-3 mx-2 focus:outline-none hover:bg-red-400 rounded text-base mt-4 md:mt-0">
+          <a href="">ログアウト</a>
+        </button>
+      @else
+      {{-- ユーザー新規登録・ログインしていない場合、新規登録・ログインボタン表示 --}}
+        <button class="inline-flex text-white items-center bg-emerald-500 border-0 py-1 px-3 mx-2 focus:outline-none hover:bg-emerald-400 rounded text-base mt-4 md:mt-0">
+          <a href="{{ route('register') }}">新規登録</a>
+        </button>
+        <button class="inline-flex text-white items-center bg-emerald-500 border-0 py-1 px-3 mx-2 focus:outline-none hover:bg-emerald-400 rounded text-base mt-4 md:mt-0">
+          <a href="{{ route('login') }}">ログイン</a>
+        </button>
+      @endauth
     </div>
 </header>
 @endsection
