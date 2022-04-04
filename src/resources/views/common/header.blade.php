@@ -21,7 +21,7 @@
       @auth
       {{-- ユーザー新規登録・ログイン済みならマイページ、ログアウト表示 --}}
         <button class="inline-flex text-white items-center bg-emerald-500 border-0 py-1 px-3 mx-2 focus:outline-none hover:bg-emerald-400 rounded text-base mt-4 md:mt-0">
-          <a href="">マイページ</a>
+          <a href="{{ route('user.index', ['id' => $user_id]) }}">マイページ</a>
         </button>
         <form action="{{ route('logout') }}" method="POST">
           @csrf
