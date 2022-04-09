@@ -58,7 +58,7 @@
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                                     <span class="bg-green-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium">
-                                        Category
+                                        {{ $post->category->category_name }}
                                     </span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">

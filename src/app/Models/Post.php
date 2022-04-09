@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category;
 
 class Post extends Model
 {
@@ -32,6 +33,11 @@ class Post extends Model
         'updated_at'
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     /**
      * ユーザーIDに紐づいた投稿リストを全て取得する
      * 
@@ -40,7 +46,7 @@ class Post extends Model
      */
     public function getAllPostsByUserId($user_id)
     {
-        $result = $this->where('user_id', $user_id)->get();
+        $result = $this->where('user_id', $user_id)->with('category')->get();
         return $result;
     }
 }
