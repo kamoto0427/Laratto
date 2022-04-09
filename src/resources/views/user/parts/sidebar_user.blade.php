@@ -1,6 +1,7 @@
 @section('sidebar')
 <div class="h-screen hidden lg:block shadow-lg relative w-50">
     <div class="bg-amber-100 h-full">
+        <div class="pt-3 pl-3">こんにちは、<br>{{ Auth::user()->name }}さん</div>
         <div class="flex items-center justify-start pt-6 ml-8">
             <p class="font-bold text-xl">
                 Laratto
