@@ -35,6 +35,7 @@ class CategorySeeder extends Seeder
             ['category_name' => '機能', 'created_at' => $now],
             ['category_name' => 'アプリ開発', 'created_at' => $now],
             ['category_name' => 'コミュニティ', 'created_at' => $now],
+            ['category_name' => 'その他', 'created_at' => $now],
         ];
 
         // categoriesテーブルにデータをinsert

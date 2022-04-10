@@ -34,6 +34,9 @@ class Post extends Model
         'updated_at'
     ];
 
+    /**
+     * categoriesとリレーション
+     */
     public function category()
     {
         return $this->belongsTo(Category::class);

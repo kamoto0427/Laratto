@@ -26,6 +26,9 @@ class Category extends Model
         'updated_at'
     ];
 
+    /**
+     * postsとリレーション
+     */
     public function posts()
     {
         return $this->hasMany(Post::class);

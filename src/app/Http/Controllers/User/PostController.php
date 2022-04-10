@@ -29,6 +29,8 @@ class PostController extends Controller
     {
         // ユーザーIDと一致する投稿データを取得
         $posts = $this->post->getAllPostsByUserId($id);
+
+        // 投稿リストを返す
         return view('user.list.index', compact('posts'));
     }
 
@@ -37,7 +39,10 @@ class PostController extends Controller
      */
     public function create()
     {
+        // カテゴリーを全て取得
         $categories = $this->category->getAllCategories();
+
+        // 新規画面を返す
         return view('user.list.create', compact('categories'));
     }
 
@@ -46,27 +51,31 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // ログインユーザー情報を取得
         $user = Auth::user();
+        // ログインユーザー情報からユーザーIDを取得
         $user_id = $user->id;
 
+        // 押下されたボタンに応じて下書き保存か公開か予約公開か決定し、postsテーブルにデータをinsert
         switch (true) {
-            // 下書き保存
+            // 下書き保存クリック
             case $request->has('save_draft'):
                 $this->post->insertPostToSaveDraft($user_id, $request);
                 break;
-            // 公開
+            // 公開クリック
             case $request->has('release'):
                 $this->post->insertPostToRelease($user_id, $request);
                 break;
-            // 予約公開
+            // 予約公開クリック
             case $request->has('reservation_release'):
                 $this->post->insertPostToReservationRelease($user_id, $request);
                 break;
-            // 上記以外ならば、下書き保存
+            // 上記以外ならば、下書き保存の処理
             default:
                 $this->post->insertPostToSaveDraft($user_id, $request);
         }
 
+        // マイページのトップ画面(投稿)にリダイレクト
         return to_route('user.index', ['id' => $user_id]);
     }
 }
