@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 
 class TopController extends Controller
 {
+    private $category;
+
+    public function __construct()
+    {
+        $this->category = new Category();
+    }
+
     /**
      * 総合トップ画面
      */
@@ -22,6 +30,12 @@ class TopController extends Controller
             $user_id = null;
         }
 
-        return view('top', compact('user_id'));
+        // カテゴリーを全て取得
+        $categories = $this->category->getAllCategories();
+
+        return view('top', compact(
+            'user_id',
+            'categories',
+        ));
     }
 }
