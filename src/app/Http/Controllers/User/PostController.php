@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\Category;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -49,7 +50,7 @@ class PostController extends Controller
     /**
      * 記事投稿処理
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         // ログインユーザー情報を取得
         $user = Auth::user();
