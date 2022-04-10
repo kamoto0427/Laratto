@@ -48,7 +48,24 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
-        $insert_post = $this->post->insertPostByRequestData($user_id, $request);
+
+        switch (true) {
+            // 下書き保存
+            case $request->has('save_draft'):
+                $this->post->insertPostToSaveDraft($user_id, $request);
+                break;
+            // 公開
+            case $request->has('release'):
+                $this->post->insertPostToRelease($user_id, $request);
+                break;
+            // 予約公開
+            case $request->has('reservation_release'):
+                $this->post->insertPostToReservationRelease($user_id, $request);
+                break;
+            // 上記以外ならば、下書き保存
+            default:
+                $this->post->insertPostToSaveDraft($user_id, $request);
+        }
 
         return to_route('user.index', ['id' => $user_id]);
     }

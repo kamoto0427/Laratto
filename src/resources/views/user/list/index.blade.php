@@ -62,7 +62,11 @@
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                                     <span class="bg-green-500 rounded-full text-white px-3 py-1 text-xs uppercase font-medium">
-                                        {{ $post->category->category_name }}
+                                        @if (isset($post->category_id))
+                                            {{ $post->category->category_name }}
+                                        @else
+                                            カテゴリーなし
+                                        @endif
                                     </span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
