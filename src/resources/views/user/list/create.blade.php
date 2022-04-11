@@ -38,10 +38,10 @@
             </div>
         </div>
         <div class="w-full mt-4">
-            <input type="text" name="title" class="block w-full text-3xl font-bold border-none outline-none" placeholder="タイトルを追加" value="{{ old('title') }}">
+            <input type="text" name="title" class="block w-full text-3xl font-bold border-none" placeholder="タイトルを追加" value="{{ old('title') }}">
         </div>
         <div class="w-full mt-4">
-            <textarea name="body" class="block w-full h-40 px-4 py-2 border-none text-gray-700 bg-white border rounded-md focus:outline-none focus:ring" placeholder="記事の内容を書いてください">{{ old('body') }}</textarea>
+            <textarea name="body" class="block w-full h-40 px-4 py-2 border-none resize-none text-gray-700 bg-white focus:outline-none" placeholder="記事の内容を書いてください">{{ old('body') }}</textarea>
         </div>
     </form>
 @endsection
