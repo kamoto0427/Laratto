@@ -3,7 +3,7 @@
 
 @include('user.parts.sidebar_user')
 @section('content')
-    <form action="" method="" class="p-5">
+    <form action="{{ route('post.store') }}" method="POST" class="p-5">
     @csrf
         <div class="flex mt-6 mr-12">
             <div class="m-auto">

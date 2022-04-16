@@ -28,6 +28,10 @@ Route::get('/', [TopController::class, 'top'])
 Route::get('/user/{id}/index', [PostController::class, 'index'])
     ->name('user.index');
 
-// 投稿
+// 投稿登録画面
 Route::get('/post/create', [PostController::class, 'create'])
     ->name('post.create');
+
+// 投稿登録処理
+Route::post('/post/store', [PostController::class, 'store'])
+    ->name('post.store');
