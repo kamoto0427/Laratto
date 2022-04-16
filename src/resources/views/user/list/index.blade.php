@@ -61,7 +61,11 @@
                                         <span aria-hidden="true" class="absolute inset-0 bg-green-500 rounded-full">
                                         </span>
                                         <span class="relative">
-                                            {{ $post->category->category_name }}
+                                            @if (isset($post->category_id))
+                                                {{ $post->category->category_name }}
+                                            @else
+                                                カテゴリーなし
+                                            @endif
                                         </span>
                                     </span>
                                 </td>

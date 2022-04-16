@@ -24,6 +24,10 @@ require __DIR__.'/auth.php';
 Route::get('/', [TopController::class, 'top'])
     ->name('top');
 
-// マイページ
+// マイページトップ・投稿
 Route::get('/user/{id}/index', [PostController::class, 'index'])
     ->name('user.index');
+
+// 投稿
+Route::get('/post/create', [PostController::class, 'create'])
+    ->name('post.create');
