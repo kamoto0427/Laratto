@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -54,7 +55,7 @@ class PostController extends Controller
      * @param string $request リクエストデータ
      * @return Response src/resources/views/user/list/index.blade.phpを表示
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         // ログインしているユーザー情報を取得
         $user = Auth::user();
