@@ -8,7 +8,11 @@
         <div class="flex justify-between">
             <div class="text-2xl font-bold pt-7">投稿</div>
             <div class="pt-4">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-md text-1xl font-medium hover:bg-blue-700 transition duration-300">新規追加</button>
+                <a href="{{ route('post.create') }}">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md text-1xl font-medium hover:bg-blue-700 transition duration-300">
+                        新規追加
+                    </button>
+                </a>
             </div>
         </div>
         <div class="py-4">
@@ -61,7 +65,11 @@
                                         <span aria-hidden="true" class="absolute inset-0 bg-green-500 rounded-full">
                                         </span>
                                         <span class="relative">
-                                            {{ $post->category->category_name }}
+                                            @if (isset($post->category_id))
+                                                {{ $post->category->category_name }}
+                                            @else
+                                                カテゴリーなし
+                                            @endif
                                         </span>
                                     </span>
                                 </td>
