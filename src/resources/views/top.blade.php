@@ -21,7 +21,7 @@
             <h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">{{ $post->title }}</h2>
             <p class="leading-relaxed mb-8">{{ $post->body }}</p>
             <div class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full">
-            <a class="px-6 py-2 inline-flex items-center text-indigo-500 transition ease-in duration-200 uppercase rounded cursor-pointer hover:bg-blue-500 hover:text-white border-2 border-blue-500 focus:outline-none">続きを読む
+            <a href="{{ route('top.article.show', ['post_id' => $post->id]) }}" class="px-6 py-2 inline-flex items-center text-indigo-500 transition ease-in duration-200 uppercase rounded cursor-pointer hover:bg-blue-500 hover:text-white border-2 border-blue-500 focus:outline-none">続きを読む
                 <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14"></path>
                 <path d="M12 5l7 7-7 7"></path>
