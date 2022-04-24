@@ -76,7 +76,6 @@ class Post extends Model
             'view_counter'     => 0,
             'favorite_counter' => 0,
             'delete_flg'       => 0,
-            'created_at'       => Carbon::now(),
         ]);
         return $result;
     }
@@ -100,7 +99,6 @@ class Post extends Model
             'view_counter'     => 0,
             'favorite_counter' => 0,
             'delete_flg'       => 0,
-            'created_at'       => Carbon::now(),
         ]);
         return $result;
     }
@@ -124,8 +122,19 @@ class Post extends Model
             'view_counter'     => 0,
             'favorite_counter' => 0,
             'delete_flg'       => 0,
-            'created_at'       => Carbon::now(),
         ]);
+        return $result;
+    }
+
+    /**
+     * 投稿IDをもとにpostsテーブルから一意の投稿データを取得
+     * 
+     * @param int $post_id 投稿ID
+     * @return object $result App\Models\Post
+     */
+    public function feachPostDateByPostId($post_id)
+    {
+        $result = $this->find($post_id);
         return $result;
     }
 }
