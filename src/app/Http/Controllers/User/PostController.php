@@ -83,4 +83,18 @@ class PostController extends Controller
 
         return to_route('user.index', ['id' => $user_id]);
     }
+
+    /**
+     * 記事詳細
+     * 
+     * @param int $post_id 投稿ID
+     * @return Response src/resources/views/user/list/show.blade.phpを表示
+     */
+    public function show($post_id) {
+        // リクエストされた投稿IDをもとにpostsテーブルから一意のデータを取得
+        $showPostData = $this->post->feachPostDateByPostId($post_id);
+        return view('user.list.show', compact(
+            'showPostData',
+        ));
+    }
 }

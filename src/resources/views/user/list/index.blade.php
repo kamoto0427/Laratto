@@ -51,9 +51,11 @@
                             @foreach ($posts as $post)
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm w-40">
-                                    <p class="text-left text-gray-900 whitespace-no-wrap">
-                                        {{ $post->title }}
-                                    </p>
+                                    <a href="{{ route('post.show', ['post_id' => $post->id]) }}" class="hover:underline">
+                                        <p class="text-left text-gray-900 whitespace-no-wrap">
+                                            {{ $post->title }}
+                                        </p>
+                                    </a>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-center text-gray-900 whitespace-no-wrap">
