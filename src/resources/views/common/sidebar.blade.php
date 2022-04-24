@@ -32,22 +32,14 @@
             @endauth
 
             <hr class="my-6 border-gray-200" />
-
-            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md hover:bg-blue-300 hover:text-gray-700"
-            href="#">
-                <span>-</span>
-                <span class="mx-4 font-medium">カテゴリー</span>
-            </a>
-            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md hover:bg-blue-300 hover:text-gray-700"
-            href="#">
-                <span>-</span>
-                <span class="mx-4 font-medium">カテゴリー</span>
-            </a>
-            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md hover:bg-blue-300 hover:text-gray-700"
-            href="#">
-                <span>-</span>
-                <span class="mx-4 font-medium">カテゴリー</span>
-            </a>
+            {{-- カテゴリーを表示 --}}
+            @foreach ($categories as $category)
+                <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md hover:bg-blue-300 hover:text-gray-700"
+                href="{{ route('top.article.category', ['category_id' => $category->id]) }}">
+                    <span>-</span>
+                    <span class="mx-4 font-medium">{{ $category->category_name }}</span>
+                </a>
+            @endforeach
         </nav>
     </div>
 </div>

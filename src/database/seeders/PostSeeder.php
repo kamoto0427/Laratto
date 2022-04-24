@@ -38,6 +38,7 @@ class PostSeeder extends Seeder
                 'favorite_counter' => 3,
                 'delete_flg'  => 0,
                 'created_at'  => $now,
+                'updated_at'  => $now
             ],
             [
                 'user_id'     => 1,
@@ -49,6 +50,7 @@ class PostSeeder extends Seeder
                 'favorite_counter' => 5,
                 'delete_flg'  => 0,
                 'created_at'  => $now,
+                'updated_at'  => $now
             ],
 
             [
@@ -61,6 +63,7 @@ class PostSeeder extends Seeder
                 'favorite_counter' => 15,
                 'delete_flg'  => 0,
                 'created_at'  => $now,
+                'updated_at'  => $now
             ],
             [
                 'user_id'     => 1,
@@ -72,6 +75,7 @@ class PostSeeder extends Seeder
                 'favorite_counter' => 10,
                 'delete_flg'  => 0,
                 'created_at'  => $now,
+                'updated_at'  => $now
             ],
         ];
 

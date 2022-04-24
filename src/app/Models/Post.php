@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Carbon;
 
@@ -38,11 +39,43 @@ class Post extends Model
     ];
 
     /**
+     * Userモデルとリレーション
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Categoryモデルとリレーション
      */
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * 投稿データを全て取得し、最新更新日時順にソート
+     */
+    public function getPostsSortByLatestUpdate()
+    {
+        $result = $this->where('publish_flg', 1)
+                       ->orderBy('updated_at', 'DESC')
+                       ->with('user')
+                       ->get();
+        return $result;
+    }
+
+    /**
+     * カテゴリーごとの記事を全て取得
+     * 
+     * @param int $category_id カテゴリーID
+     */
+    public function getPostByCategoryId($category_id)
+    {
+        $result = $this->where('category_id', $category_id)
+                       ->get();
+        return $result;
     }
 
     /**
@@ -76,7 +109,6 @@ class Post extends Model
             'view_counter'     => 0,
             'favorite_counter' => 0,
             'delete_flg'       => 0,
-            'created_at'       => Carbon::now(),
         ]);
         return $result;
     }
@@ -100,7 +132,6 @@ class Post extends Model
             'view_counter'     => 0,
             'favorite_counter' => 0,
             'delete_flg'       => 0,
-            'created_at'       => Carbon::now(),
         ]);
         return $result;
     }
@@ -124,8 +155,19 @@ class Post extends Model
             'view_counter'     => 0,
             'favorite_counter' => 0,
             'delete_flg'       => 0,
-            'created_at'       => Carbon::now(),
         ]);
+        return $result;
+    }
+
+    /**
+     * 投稿IDをもとにpostsテーブルから一意の投稿データを取得
+     * 
+     * @param int $post_id 投稿ID
+     * @return object $result App\Models\Post
+     */
+    public function feachPostDateByPostId($post_id)
+    {
+        $result = $this->find($post_id);
         return $result;
     }
 }
