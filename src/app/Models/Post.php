@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Carbon;
 
@@ -38,11 +39,32 @@ class Post extends Model
     ];
 
     /**
+     * Userモデルとリレーション
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Categoryモデルとリレーション
      */
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * 投稿データを全て取得し、最新更新日時順にソート
+     */
+    public function getPostsSortByLatestUpdate()
+    {
+        $result = $this->where('publish_flg', 1)
+                       ->orderBy('updated_at', 'DESC')
+                       ->with('user')
+                       ->with('category')
+                       ->get();
+        return $result;
     }
 
     /**
