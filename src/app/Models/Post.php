@@ -68,6 +68,18 @@ class Post extends Model
     }
 
     /**
+     * カテゴリーごとの記事を全て取得
+     * 
+     * @param int $category_id カテゴリーID
+     */
+    public function getPostByCategoryId($category_id)
+    {
+        $result = $this->where('category_id', $category_id)
+                       ->get();
+        return $result;
+    }
+
+    /**
      * ユーザーIDに紐づいた投稿リストを全て取得する
      * 
      * @param int $user_id ユーザーID

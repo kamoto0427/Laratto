@@ -28,6 +28,10 @@ Route::get('/', [TopController::class, 'top'])
 Route::get('/article/{post_id}', [TopController::class, 'articleShow'])
     ->name('top.article.show');
 
+// 総合トップカテゴリーごとの記事一覧
+Route::get('/article/category/{category_id}', [TopController::class, 'articleCategory'])
+    ->name('top.article.category');
+
 // マイページトップ・投稿
 Route::get('/user/{id}/index', [PostController::class, 'index'])
     ->name('user.index');

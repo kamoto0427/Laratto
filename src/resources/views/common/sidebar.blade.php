@@ -36,7 +36,7 @@
             {{-- カテゴリーを表示 --}}
             @foreach ($categories as $category)
                 <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-200 transform rounded-md hover:bg-blue-300 hover:text-gray-700"
-                href="">
+                href="{{ route('top.article.category', ['category_id' => $category->id]) }}">
                     <span>-</span>
                     <span class="mx-4 font-medium">{{ $category->category_name }}</span>
                 </a>
