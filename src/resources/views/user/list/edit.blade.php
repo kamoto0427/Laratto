@@ -3,7 +3,7 @@
 
 @include('user.parts.sidebar_user')
 @section('content')
-    <form action="{{ route('post.store') }}" method="POST" class="p-5">
+    <form action="{{ route('post.update') }}" method="POST" class="p-5">
     @csrf
         @if ($errors->any())
             <div class="flex shadow-lg rounded-sm">
@@ -27,10 +27,13 @@
                 <select name="category" class="block w-64 text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                     <option value="">カテゴリーを選択</option>
                     @foreach ($categories as $category)
+                        {{-- バリデーションエラー発生時、直前で選択した値を選択した状態にする --}}
                         @if (old('category'))
                             <option value="{{ $category->id }}" @selected(old('category') == $category->id)>{{ $category->category_name }}</option>
+                        {{-- 編集画面で、DBに登録しているデータを選択状態にする --}}
                         @elseif ($category->id == $post->category_id)
                             <option value="{{ $category->id }}" @selected($post->category_id)>{{ $category->category_name }}</option>
+                        {{-- 上記以外の場合は、選択状態にしない(記事新規作成の初期状態など) --}}
                         @else
                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                         @endif
