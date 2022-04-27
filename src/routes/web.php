@@ -47,3 +47,7 @@ Route::post('/post/store', [PostController::class, 'store'])
 // 投稿詳細
 Route::get('/post/show/{post_id}', [PostController::class, 'show'])
     ->name('post.show');
+
+// 記事編集
+Route::get('/post/edit/{post_id}', [PostController::class, 'edit'])
+    ->name('post.edit');

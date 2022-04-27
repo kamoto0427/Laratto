@@ -97,4 +97,22 @@ class PostController extends Controller
             'showPostData',
         ));
     }
+
+    /**
+     * 記事編集
+     * 
+     * @param int $post_id 投稿ID
+     * @return Response src/resources/views/user/list/edit.blade.phpを表示
+     */
+    public function edit($post_id)
+    {
+        // カテゴリーデータを全件取得
+        $categories = $this->category->getAllCategories();
+        // 投稿IDをもとに特定の投稿データを取得
+        $post = $this->post->feachPostDateByPostId($post_id);
+        return view('user.list.edit', compact(
+            'categories',
+            'post',
+        ));
+    }
 }
