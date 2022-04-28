@@ -115,4 +115,39 @@ class PostController extends Controller
             'post',
         ));
     }
+
+    /**
+     * 記事の更新
+     */
+    public function update(PostRequest $request, $post_id)
+    {
+        // ログインしているユーザー情報を取得
+        $user = Auth::user();
+        // ログインユーザー情報からユーザーIDを取得
+        $user_id = $user->id;
+
+        // 投稿IDをもとに特定の投稿データを取得
+        $post = $this->post->feachPostDateByPostId($post_id);
+
+        switch (true) {
+            // 下書き保存クリック時の処理
+            case $request->has('save_draft'):
+                $this->post->updatePostToSaveDraft($request, $post);
+                break;
+            // 公開クリック時の処理
+            case $request->has('release'):
+                $this->post->updatePostToRelease($request, $post);
+                break;
+            // 予約公開クリック時の処理
+            case $request->has('reservation_release'):
+                $this->post->updatePostToReservationRelease($request, $post);
+                break;
+            // 上記以外の処理
+            default:
+                $this->post->updatePostToSaveDraft($request, $post);
+                break;
+        }
+
+        return to_route('user.index', ['id' => $user_id]);
+    }
 }

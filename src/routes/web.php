@@ -51,3 +51,7 @@ Route::get('/post/show/{post_id}', [PostController::class, 'show'])
 // 記事編集
 Route::get('/post/edit/{post_id}', [PostController::class, 'edit'])
     ->name('post.edit');
+
+// 記事更新
+Route::post('/post/edit/{post_id}', [PostController::class, 'update'])
+    ->name('post.update');

@@ -87,7 +87,10 @@ class Post extends Model
      */
     public function getAllPostsByUserId($user_id)
     {
-        $result = $this->where('user_id', $user_id)->with('category')->get();
+        $result = $this->where('user_id', $user_id)
+                       ->with('category')
+                       ->orderBy('updated_at', 'DESC')
+                       ->get();
         return $result;
     }
 
@@ -169,6 +172,72 @@ class Post extends Model
     public function feachPostDateByPostId($post_id)
     {
         $result = $this->find($post_id);
+        return $result;
+    }
+
+    /**
+     * 記事の更新処理
+     * 下書き保存=>publish_flg=0
+     * リクエストされたデータをもとにpostデータを更新する
+     * 
+     * @param array $post 投稿データ
+     * @return object $result App\Models\Post
+     */
+    public function updatePostToSaveDraft($request, $post)
+    {
+        $result = $post->fill([
+            'category_id'      => $request->category,
+            'title'            => $request->title,
+            'body'             => $request->body,
+            'publish_flg'      => 0,
+        ]);
+
+        $result->save();
+
+        return $result;
+    }
+
+    /**
+     * 記事の更新処理
+     * 公開=>publish_flg=1
+     * リクエストされたデータをもとにpostデータを更新する
+     * 
+     * @param array $post 投稿データ
+     * @return object $result App\Models\Post
+     */
+    public function updatePostToRelease($request, $post)
+    {
+        $result = $post->fill([
+            'category_id'      => $request->category,
+            'title'            => $request->title,
+            'body'             => $request->body,
+            'publish_flg'      => 1,
+        ]);
+
+        $result->save();
+
+        return $result;
+    }
+
+    /**
+     * 記事の更新処理
+     * 公開予約=>publish_flg=0
+     * リクエストされたデータをもとにpostデータを更新する
+     * 
+     * @param array $post 投稿データ
+     * @return object $result App\Models\Post
+     */
+    public function updatePostToReservationRelease($request, $post)
+    {
+        $result = $post->fill([
+            'category_id'      => $request->category,
+            'title'            => $request->title,
+            'body'             => $request->body,
+            'publish_flg'      => 2,
+        ]);
+
+        $result->save();
+
         return $result;
     }
 }

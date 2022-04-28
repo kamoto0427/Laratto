@@ -3,7 +3,7 @@
 
 @include('user.parts.sidebar_user')
 @section('content')
-    <form action="{{ route('post.update') }}" method="POST" class="p-5">
+    <form action="{{ route('post.update', ['post_id' => $post->id]) }}" method="POST" class="p-5">
     @csrf
         @if ($errors->any())
             <div class="flex shadow-lg rounded-sm">
@@ -52,5 +52,6 @@
         <div class="w-full mt-4">
             <textarea name="body" class="block w-full h-40 px-4 py-2 border-none resize-none text-gray-700 bg-white border rounded-md focus:outline-none focus:ring" placeholder="記事の内容を書いてください">{{ old('body', $post->body) }}</textarea>
         </div>
+        <input type="hidden" name="post_id" value="{{ $post->id }}">
     </form>
 @endsection
