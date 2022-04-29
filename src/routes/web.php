@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\User\PostController;
+use App\Http\Controllers\User\TrashController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +56,7 @@ Route::get('/post/edit/{post_id}', [PostController::class, 'edit'])
 // 記事更新
 Route::post('/post/edit/{post_id}', [PostController::class, 'update'])
     ->name('post.update');
+
+// 記事のゴミ箱
+Route::get('/post/trash', [TrashController::class, 'trashList'])
+->name('post.trash');
