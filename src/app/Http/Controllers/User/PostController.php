@@ -22,7 +22,7 @@ class PostController extends Controller
 
     /**
      * 投稿リスト
-     * 
+     *
      * @param int $id ユーザーID
      * @return Response src/resources/views/user/list/index.blade.phpを表示
      */
@@ -37,7 +37,7 @@ class PostController extends Controller
 
     /**
      * 記事投稿画面
-     * 
+     *
      * @return Response src/resources/views/user/list/create.blade.phpを表示
      */
     public function create()
@@ -51,7 +51,7 @@ class PostController extends Controller
 
     /**
      * 記事投稿処理
-     * 
+     *
      * @param string $request リクエストデータ
      * @return Response src/resources/views/user/list/index.blade.phpを表示
      */
@@ -86,7 +86,7 @@ class PostController extends Controller
 
     /**
      * 記事詳細
-     * 
+     *
      * @param int $post_id 投稿ID
      * @return Response src/resources/views/user/list/show.blade.phpを表示
      */
@@ -96,5 +96,61 @@ class PostController extends Controller
         return view('user.list.show', compact(
             'showPostData',
         ));
+    }
+
+    /**
+     * 記事編集
+     *
+     * @param int $post_id 投稿ID
+     * @return Response src/resources/views/user/list/edit.blade.phpを表示
+     */
+    public function edit($post_id)
+    {
+        // カテゴリーデータを全件取得
+        $categories = $this->category->getAllCategories();
+        // 投稿IDをもとに特定の投稿データを取得
+        $post = $this->post->feachPostDateByPostId($post_id);
+        return view('user.list.edit', compact(
+            'categories',
+            'post',
+        ));
+    }
+
+    /**
+     * 記事の更新
+     *
+     * @param int $post_id 投稿ID
+     * @return Response src/resources/views/user/list/index.blade.phpを表示
+     */
+    public function update(PostRequest $request, $post_id)
+    {
+        // ログインしているユーザー情報を取得
+        $user = Auth::user();
+        // ログインユーザー情報からユーザーIDを取得
+        $user_id = $user->id;
+
+        // 投稿IDをもとに特定の投稿データを取得
+        $post = $this->post->feachPostDateByPostId($post_id);
+
+        switch (true) {
+            // 下書き保存クリック時の処理
+            case $request->has('save_draft'):
+                $this->post->updatePostToSaveDraft($request, $post);
+                break;
+            // 公開クリック時の処理
+            case $request->has('release'):
+                $this->post->updatePostToRelease($request, $post);
+                break;
+            // 予約公開クリック時の処理
+            case $request->has('reservation_release'):
+                $this->post->updatePostToReservationRelease($request, $post);
+                break;
+            // 上記以外の処理
+            default:
+                $this->post->updatePostToSaveDraft($request, $post);
+                break;
+        }
+
+        return to_route('user.index', ['id' => $user_id]);
     }
 }
