@@ -34,7 +34,7 @@
                                     ステータス
                                 </th>
                                 <th scope="col" class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-center text-sm uppercase font-normal">
-                                    日付
+                                    最終更新日時
                                 </th>
                                 <th scope="col" class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal">
                                     操作
@@ -106,11 +106,11 @@
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-center text-gray-900 whitespace-no-wrap">
-                                        {{ $post->created_at }}
+                                        {{ $post->updated_at }}
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 mr-5 border-b border-gray-200 bg-white text-sm">
-                                    <a class="mr-3 text-blue-700 whitespace-no-wrap underline" href="#">
+                                    <a class="mr-3 text-blue-700 whitespace-no-wrap underline" href="{{ route('post.edit', ['post_id' => $post->id]) }}">
                                         Edit
                                     </a>
                                     <a class="ml-5 underline text-red-700 whitespace-no-wrap" href="#">

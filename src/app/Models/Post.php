@@ -69,7 +69,7 @@ class Post extends Model
 
     /**
      * カテゴリーごとの記事を全て取得
-     * 
+     *
      * @param int $category_id カテゴリーID
      */
     public function getPostByCategoryId($category_id)
@@ -81,20 +81,23 @@ class Post extends Model
 
     /**
      * ユーザーIDに紐づいた投稿リストを全て取得する
-     * 
+     *
      * @param int $user_id ユーザーID
      * @return Post
      */
     public function getAllPostsByUserId($user_id)
     {
-        $result = $this->where('user_id', $user_id)->with('category')->get();
+        $result = $this->where('user_id', $user_id)
+                       ->with('category')
+                       ->orderBy('updated_at', 'DESC')
+                       ->get();
         return $result;
     }
 
     /**
      * 下書き保存=>publish_flg=0
      * リクエストされたデータをpostsテーブルにinsertする
-     * 
+     *
      * @param int $user_id ログインユーザーID
      * @param array $request リクエストデータ
      * @return object $result App\Models\Post
@@ -117,7 +120,7 @@ class Post extends Model
     /**
      * 公開=>publish_flg=1
      * リクエストされたデータをpostsテーブルにinsertする
-     * 
+     *
      * @param int $user_id ログインユーザーID
      * @param array $request リクエストデータ
      * @return object $result App\Models\Post
@@ -140,7 +143,7 @@ class Post extends Model
     /**
      * 予約公開=>publish_flg=2
      * リクエストされたデータをpostsテーブルにinsertする
-     * 
+     *
      * @param int $user_id ログインユーザーID
      * @param array $request リクエストデータ
      * @return object $result App\Models\Post
@@ -162,13 +165,79 @@ class Post extends Model
 
     /**
      * 投稿IDをもとにpostsテーブルから一意の投稿データを取得
-     * 
+     *
      * @param int $post_id 投稿ID
      * @return object $result App\Models\Post
      */
     public function feachPostDateByPostId($post_id)
     {
         $result = $this->find($post_id);
+        return $result;
+    }
+
+    /**
+     * 記事の更新処理
+     * 下書き保存=>publish_flg=0
+     * リクエストされたデータをもとにpostデータを更新する
+     *
+     * @param array $post 投稿データ
+     * @return object $result App\Models\Post
+     */
+    public function updatePostToSaveDraft($request, $post)
+    {
+        $result = $post->fill([
+            'category_id'      => $request->category,
+            'title'            => $request->title,
+            'body'             => $request->body,
+            'publish_flg'      => 0,
+        ]);
+
+        $result->save();
+
+        return $result;
+    }
+
+    /**
+     * 記事の更新処理
+     * 公開=>publish_flg=1
+     * リクエストされたデータをもとにpostデータを更新する
+     *
+     * @param array $post 投稿データ
+     * @return object $result App\Models\Post
+     */
+    public function updatePostToRelease($request, $post)
+    {
+        $result = $post->fill([
+            'category_id'      => $request->category,
+            'title'            => $request->title,
+            'body'             => $request->body,
+            'publish_flg'      => 1,
+        ]);
+
+        $result->save();
+
+        return $result;
+    }
+
+    /**
+     * 記事の更新処理
+     * 公開予約=>publish_flg=0
+     * リクエストされたデータをもとにpostデータを更新する
+     *
+     * @param array $post 投稿データ
+     * @return object $result App\Models\Post
+     */
+    public function updatePostToReservationRelease($request, $post)
+    {
+        $result = $post->fill([
+            'category_id'      => $request->category,
+            'title'            => $request->title,
+            'body'             => $request->body,
+            'publish_flg'      => 2,
+        ]);
+
+        $result->save();
+
         return $result;
     }
 }
