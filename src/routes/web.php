@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\User\PostController;
+use App\Http\Controllers\User\TrashController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +56,19 @@ Route::get('/post/edit/{post_id}', [PostController::class, 'edit'])
 // 記事更新
 Route::post('/post/edit/{post_id}', [PostController::class, 'update'])
     ->name('post.update');
+
+// 記事のゴミ箱
+Route::get('/post/trash', [TrashController::class, 'trashList'])
+    ->name('post.trash');
+
+// 記事論理削除(ゴミ箱に移動)
+Route::post('/post/trash/{post_id}', [TrashController::class, 'moveTrash'])
+    ->name('post.move.trash');
+
+// 記事の復元(ゴミ箱から投稿リストに戻す)
+Route::post('/post/restore/{post_id}', [TrashController::class, 'restore'])
+    ->name('post.restore');
+
+// 記事を完全に削除
+Route::post('/post/delete/{post_id}', [TrashController::class, 'delete'])
+    ->name('post.delete');

@@ -76,7 +76,7 @@
             </div>
             <div>
                 <a class="flex items-center px-4 py-2 mt-2 text-gray-600 transition-colors duration-200 transform hover:bg-sky-500 hover:text-white"
-                href="#">
+                href="{{ route('post.trash') }}">
                     <span class="text-left">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
