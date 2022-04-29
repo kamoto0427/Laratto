@@ -59,4 +59,8 @@ Route::post('/post/edit/{post_id}', [PostController::class, 'update'])
 
 // 記事のゴミ箱
 Route::get('/post/trash', [TrashController::class, 'trashList'])
-->name('post.trash');
+    ->name('post.trash');
+
+// 記事論理削除(ゴミ箱に移動)
+Route::post('/post/trash/{post_id}', [TrashController::class, 'moveTrash'])
+    ->name('post.move.trash');

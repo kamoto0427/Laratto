@@ -59,7 +59,10 @@ class Post extends Model
      */
     public function getPostsSortByLatestUpdate()
     {
-        $result = $this->where('publish_flg', 1)
+        $result = $this->where([
+                            ['publish_flg', 1],
+                            ['delete_flg', 0],
+                        ])
                        ->orderBy('updated_at', 'DESC')
                        ->with('user')
                        ->with('category')
@@ -74,7 +77,10 @@ class Post extends Model
      */
     public function getPostByCategoryId($category_id)
     {
-        $result = $this->where('category_id', $category_id)
+        $result = $this->where([
+                            ['category_id', $category_id],
+                            ['delete_flg', 0],
+                        ])
                        ->get();
         return $result;
     }
@@ -87,7 +93,10 @@ class Post extends Model
      */
     public function getAllPostsByUserId($user_id)
     {
-        $result = $this->where('user_id', $user_id)
+        $result = $this->where([
+                            ['user_id', $user_id],
+                            ['delete_flg', 0],
+                        ])
                        ->with('category')
                        ->orderBy('updated_at', 'DESC')
                        ->get();
@@ -255,6 +264,21 @@ class Post extends Model
                         ])
                         ->get();
 
+        return $result;
+    }
+
+    /**
+     * 記事の論理削除(ゴミ箱に移動)
+     *
+     * @param array $post 投稿データ
+     * @return object $result App\Models\Post
+     */
+    public function moveTrashPostData($post)
+    {
+        $result = $post->fill([
+            'delete_flg' => 1
+        ]);
+        $result->save();
         return $result;
     }
 }

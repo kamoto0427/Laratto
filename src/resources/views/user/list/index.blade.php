@@ -110,12 +110,17 @@
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 mr-5 border-b border-gray-200 bg-white text-sm">
-                                    <a class="mr-3 text-blue-700 whitespace-no-wrap underline" href="{{ route('post.edit', ['post_id' => $post->id]) }}">
-                                        Edit
-                                    </a>
-                                    <a class="ml-5 underline text-red-700 whitespace-no-wrap" href="#">
-                                        delete
-                                    </a>
+                                    <div class="flex">
+                                        <a class="mr-3 text-blue-700 whitespace-no-wrap underline" href="{{ route('post.edit', ['post_id' => $post->id]) }}">
+                                            Edit
+                                        </a>
+                                        <form action="{{ route('post.move.trash', ['post_id' => $post->id]) }}" method="POST" onSubmit="return is_move_trash()">
+                                        @csrf
+                                            <button type="submit" class="underline text-red-700 whitespace-no-wrap">
+                                                Trash
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-center text-gray-900 whitespace-no-wrap">
@@ -136,4 +141,17 @@
         </div>
     </div>
 </div>
+<script>
+    function is_move_trash() {
+        const moveTarashMessage = 'ゴミ箱に移動しますか？';
+        const cancelMessage = 'キャンセルされました';
+        // trashをクリックした時に確認ダイアログを表示。OKで実行、キャンセルで実行しない。
+        if(window.confirm(moveTarashMessage)){
+            return true;
+        } else {
+            window.alert(cancelMessage);
+            return false;
+        }
+    }
+</script>
 @endsection
