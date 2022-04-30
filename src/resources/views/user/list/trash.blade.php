@@ -69,7 +69,7 @@
                                     </span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                                    <form action="" method="POST">
+                                    <form action="{{ route('post.restore', ['post_id' => $post->id]) }}" method="POST" onSubmit="return is_restore_check()">
                                     @csrf
                                         <button type="submit" class="mr-3 text-blue-700 whitespace-no-wrap underline">
                                             投稿を復元する
@@ -110,4 +110,17 @@
         </div>
     </div>
 </div>
+<script>
+    function is_restore_check() {
+        const restore = '記事を復元しますか？';
+        const cancel  = 'キャンセルされました';
+        // 記事を復元するをクリックした時に確認ダイアログを表示。OKで実行、キャンセルで実行しない。
+        if(window.confirm(restore)){
+            return true;
+        } else {
+            window.alert(cancel);
+            return false;
+        }
+    }
+</script>
 @endsection

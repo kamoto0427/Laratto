@@ -281,4 +281,19 @@ class Post extends Model
         $result->save();
         return $result;
     }
+
+    /**
+     * 記事の復元
+     *
+     * @param array $post 投稿データ
+     * @return object $result App\Models\Post
+     */
+    public function restorePostData($post)
+    {
+        $result = $post->fill([
+            'delete_flg' => 0
+        ]);
+        $result->save();
+        return $result;
+    }
 }

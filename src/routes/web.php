@@ -64,3 +64,7 @@ Route::get('/post/trash', [TrashController::class, 'trashList'])
 // 記事論理削除(ゴミ箱に移動)
 Route::post('/post/trash/{post_id}', [TrashController::class, 'moveTrash'])
     ->name('post.move.trash');
+
+// 記事の復元(ゴミ箱から投稿リストに戻す)
+Route::post('/post/restore/{post_id}', [TrashController::class, 'restore'])
+    ->name('post.restore');
