@@ -68,3 +68,7 @@ Route::post('/post/trash/{post_id}', [TrashController::class, 'moveTrash'])
 // 記事の復元(ゴミ箱から投稿リストに戻す)
 Route::post('/post/restore/{post_id}', [TrashController::class, 'restore'])
     ->name('post.restore');
+
+// 記事を完全に削除
+Route::post('/post/delete/{post_id}', [TrashController::class, 'delete'])
+    ->name('post.delete');
