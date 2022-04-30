@@ -22,53 +22,61 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 // 総合トップ
-Route::get('/', [TopController::class, 'top'])
-    ->name('top');
+Route::controller(TopController::class)->group(function() {
+    // 総合トップ画面
+    Route::get('/', 'top')
+        ->name('top');
+    // 総合トップ記事詳細画面
+    Route::get('/article/{post_id}', 'articleShow')
+        ->name('top.article.show');
+    // 総合トップカテゴリーごとの記事一覧
+    Route::get('/article/category/{category_id}', 'articleCategory')
+        ->name('top.article.category');
+});
 
-// 総合トップ記事詳細画面
-Route::get('/article/{post_id}', [TopController::class, 'articleShow'])
-    ->name('top.article.show');
+// マイページ投稿関係
+Route::controller(PostController::class)->group(function() {
+    // マイページトップ・投稿
+    Route::get('/user/{id}/index', 'index')
+        ->name('user.index');
 
-// 総合トップカテゴリーごとの記事一覧
-Route::get('/article/category/{category_id}', [TopController::class, 'articleCategory'])
-    ->name('top.article.category');
+    // 投稿登録画面
+    Route::get('/post/create', 'create')
+        ->name('post.create');
 
-// マイページトップ・投稿
-Route::get('/user/{id}/index', [PostController::class, 'index'])
-    ->name('user.index');
+    // 投稿登録処理
+    Route::post('/post/store', 'store')
+        ->name('post.store');
 
-// 投稿登録画面
-Route::get('/post/create', [PostController::class, 'create'])
-    ->name('post.create');
+    // 投稿詳細
+    Route::get('/post/show/{post_id}', 'show')
+        ->name('post.show');
 
-// 投稿登録処理
-Route::post('/post/store', [PostController::class, 'store'])
-    ->name('post.store');
+    // 記事編集
+    Route::get('/post/edit/{post_id}', 'edit')
+        ->name('post.edit');
 
-// 投稿詳細
-Route::get('/post/show/{post_id}', [PostController::class, 'show'])
-    ->name('post.show');
+    // 記事更新
+    Route::post('/post/edit/{post_id}', 'update')
+        ->name('post.update');
 
-// 記事編集
-Route::get('/post/edit/{post_id}', [PostController::class, 'edit'])
-    ->name('post.edit');
+});
 
-// 記事更新
-Route::post('/post/edit/{post_id}', [PostController::class, 'update'])
-    ->name('post.update');
+// ゴミ箱関係
+Route::controller(TrashController::class)->group(function() {
+    // 記事のゴミ箱
+    Route::get('/post/trash', 'trashList')
+        ->name('post.trash');
 
-// 記事のゴミ箱
-Route::get('/post/trash', [TrashController::class, 'trashList'])
-    ->name('post.trash');
+    // 記事論理削除(ゴミ箱に移動)
+    Route::post('/post/trash/{post_id}', 'moveTrash')
+        ->name('post.move.trash');
 
-// 記事論理削除(ゴミ箱に移動)
-Route::post('/post/trash/{post_id}', [TrashController::class, 'moveTrash'])
-    ->name('post.move.trash');
+    // 記事の復元(ゴミ箱から投稿リストに戻す)
+    Route::post('/post/restore/{post_id}', 'restore')
+        ->name('post.restore');
 
-// 記事の復元(ゴミ箱から投稿リストに戻す)
-Route::post('/post/restore/{post_id}', [TrashController::class, 'restore'])
-    ->name('post.restore');
-
-// 記事を完全に削除
-Route::post('/post/delete/{post_id}', [TrashController::class, 'delete'])
-    ->name('post.delete');
+    // 記事を完全に削除
+    Route::post('/post/delete/{post_id}', 'delete')
+        ->name('post.delete');
+});
