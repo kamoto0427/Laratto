@@ -330,7 +330,8 @@ class Post extends Model
     public function moveTrashPostData($post)
     {
         $result = $post->fill([
-            'delete_flg' => 1
+            'publish_flg' => 0,
+            'delete_flg'  => 1
         ]);
         $result->save();
         return $result;
@@ -345,6 +346,7 @@ class Post extends Model
     public function restorePostData($post)
     {
         $result = $post->fill([
+            'publish_flg' => 0,
             'delete_flg' => 0
         ]);
         $result->save();
