@@ -153,4 +153,58 @@ class PostController extends Controller
 
         return to_route('user.index', ['id' => $user_id]);
     }
+
+    /**
+     * 下書き保存一覧
+     *
+     * @return Response src/resources/views/user/list/saveDraft.blade.phpを表示
+     */
+    public function saveDraft()
+    {
+        // ログインしているユーザー情報を取得
+        $user = Auth::user();
+        // ログインユーザー情報からユーザーIDを取得
+        $user_id = $user->id;
+        // 下書き保存の記事一覧を取得
+        $saveDrafts = $this->post->getSaveDraftPosts($user_id);
+        return view('user.list.saveDraft', compact(
+            'saveDrafts',
+        ));
+    }
+
+    /**
+     * 公開中記事一覧
+     *
+     * @return Response src/resources/views/user/list/release.blade.phpを表示
+     */
+    public function release()
+    {
+        // ログインしているユーザー情報を取得
+        $user = Auth::user();
+        // ログインユーザー情報からユーザーIDを取得
+        $user_id = $user->id;
+        // 公開中の記事一覧を取得
+        $releases = $this->post->getReleasePosts($user_id);
+        return view('user.list.release', compact(
+            'releases',
+        ));
+    }
+
+    /**
+     * 予約公開記事一覧
+     *
+     * @return Response src/resources/views/user/list/release.blade.phpを表示
+     */
+    public function reservationRelease()
+    {
+        // ログインしているユーザー情報を取得
+        $user = Auth::user();
+        // ログインユーザー情報からユーザーIDを取得
+        $user_id = $user->id;
+        // 予約公開の記事一覧を取得
+        $reservationPosts = $this->post->getReservationReleasePosts($user_id);
+        return view('user.list.reservationRelease', compact(
+            'reservationPosts',
+        ));
+    }
 }
