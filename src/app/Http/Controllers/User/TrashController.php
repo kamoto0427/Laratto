@@ -58,7 +58,7 @@ class TrashController extends Controller
         $trashPost = $this->post->moveTrashPostData($post);
 
         // マイページ投稿リストにリダイレクト
-        return to_route('user.index', ['id' => $user_id]);
+        return to_route('user.index', ['id' => $user_id])->with('moveTrash', '記事をゴミ箱に移動しました。');
     }
 
     /**
@@ -86,7 +86,8 @@ class TrashController extends Controller
         return to_route('post.trash', compact(
             'user_id',
             'trash_posts',
-        ));
+        ))
+        ->with('restore', '記事を復元しました。');
     }
 
     /**
@@ -113,6 +114,7 @@ class TrashController extends Controller
         return to_route('post.trash', compact(
             'user_id',
             'trash_posts',
-        ));
+        ))
+        ->with('delete', '記事を完全に削除しました。');
     }
 }

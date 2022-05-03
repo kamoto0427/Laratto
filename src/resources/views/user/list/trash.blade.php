@@ -3,6 +3,8 @@
 
 @include('user.parts.sidebar_user')
 @section('content')
+@component('components.flash-message')
+@endcomponent
 <div class="h-screen overflow-y-scroll">
     <div class="px-4 sm:px-4">
         <div class="flex justify-between">
