@@ -50,7 +50,7 @@
             </div>
             <div>
                 <a class="flex items-center px-4 py-2 mt-2 text-gray-600 transition-colors duration-200 transform hover:bg-sky-500 hover:text-white"
-                href="#">
+                href="{{ route('post.saveDraft') }}">
                     <span class="text-left">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M2 9.5A3.5 3.5 0 005.5 13H9v2.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 15.586V13h2.5a4.5 4.5 0 10-.616-8.958 4.002 4.002 0 10-7.753 1.977A3.5 3.5 0 002 9.5zm9 3.5H9V8a1 1 0 012 0v5z" clip-rule="evenodd" />
@@ -63,7 +63,20 @@
             </div>
             <div>
                 <a class="flex items-center px-4 py-2 mt-2 text-gray-600 transition-colors duration-200 transform hover:bg-sky-500 hover:text-white"
-                href="#">
+                href="{{ route('post.release') }}">
+                    <span class="text-left">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    <span class="mx-2 text-md font-normal">
+                        公開中
+                    </span>
+                </a>
+            </div>
+            <div>
+                <a class="flex items-center px-4 py-2 mt-2 text-gray-600 transition-colors duration-200 transform hover:bg-sky-500 hover:text-white"
+                href="{{ route('post.reservationRelease') }}">
                     <span class="text-left">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
