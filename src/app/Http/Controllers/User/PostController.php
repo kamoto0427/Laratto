@@ -73,11 +73,6 @@ class PostController extends Controller
                 $this->post->insertPostToRelease($user_id, $request);
                 $request->session()->flash('release', '記事を公開しました。');
                 break;
-            // 予約公開クリック時の処理
-            case $request->has('reservation_release'):
-                $this->post->insertPostToReservationRelease($user_id, $request);
-                $request->session()->flash('reservationRelease', '記事を予約公開しました。');
-                break;
             // 上記以外の処理
             default:
                 $this->post->insertPostToSaveDraft($user_id, $request);
@@ -85,6 +80,7 @@ class PostController extends Controller
                 break;
         }
 
+        // 投稿一覧にリダイレクト
         return to_route('user.index', ['id' => $user_id]);
     }
 
