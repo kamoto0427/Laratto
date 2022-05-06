@@ -34,15 +34,20 @@ class ReservationPostController extends Controller
         // ログインユーザーIDを取得
         $user_id = $user->id;
 
+        // リクエストデータ
         $title = $request->title;
         $body  = $request->body;
         $category = $request->category;
+
+        // 15分リスト
+        $minuteList = ['00', '15', '30', '45'];
 
         return view('user.list.reservationSetting', compact(
             'user_id',
             'title',
             'body',
-            'category'
+            'category',
+            'minuteList'
         ));
     }
 

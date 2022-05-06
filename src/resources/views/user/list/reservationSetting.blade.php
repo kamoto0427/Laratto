@@ -19,9 +19,9 @@
         </select>
         <label for="reservation_minute">分:</label>
         <select name="reservation_minute">
-            @for ($i=0; $i<=60; $i++)
-                <option value="{{ $i < 10 ? '0'.$i: $i }}">{{ $i < 10 ? '0'.$i: $i }}</option>
-            @endfor
+            @foreach ($minuteList as $m)
+                <option value="{{ $m }}">{{ $m }}</option>
+            @endforeach
         </select>
         <input type="hidden" name="title" value="{{ $title }}">
         <input type="hidden" name="body" value="{{ $body }}">
