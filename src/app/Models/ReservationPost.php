@@ -44,4 +44,33 @@ class ReservationPost extends Model
             'reservation_time' => $reservation_time
         ]);
     }
+
+    /**
+     * ユーザーIDと投稿IDをもとに予約公開予定の投稿データを取得
+     *
+     * @param int $user_id ユーザーID
+     * @param int $post_id 投稿ID
+     */
+    public function getReservationPostByUserIdAndPostId($user_id, $post_id)
+    {
+        return $this->where([
+            ['user_id', $user_id],
+            ['post_id', $post_id]
+        ])
+        ->first();
+    }
+
+    /**
+     * 予約公開データを更新
+     *
+     * @param $reservationPost 予約公開データ
+     * @param $request リクエストデータ
+     */
+    public function updateReservationPost($reservationPost, $reservation_date, $reservation_time)
+    {
+        return $reservationPost->fill([
+            'reservation_date' => $reservation_date,
+            'reservation_time' => $reservation_time,
+        ])->save();
+    }
 }

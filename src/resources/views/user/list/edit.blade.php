@@ -53,18 +53,18 @@
             @if ($post->publish_flg === 0)
                 <button type="submit" name="save_draft" class="px-4 py-2 text-white text-lg transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400">下書き保存</button>
                 <button type="submit" name="release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-400">更新して公開</button>
-                <button type="submit" name="reservation_release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-amber-500 rounded-md hover:bg-amber-400">予約公開</button>
+                <button formaction="{{ route('reservation.post.edit', ['post_id' => $post->id]) }}" formmethod="GET" name="reservation_release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-amber-500 rounded-md hover:bg-amber-400">予約公開</button>
             @elseif ($post->publish_flg === 1)
                 <button type="submit" name="save_draft" class="px-4 py-2 text-white text-lg transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400">下書きに戻す</button>
                 <button type="submit" name="release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-400">更新して公開</button>
             @elseif ($post->publish_flg === 2)
                 <button type="submit" name="save_draft" class="px-4 py-2 text-white text-lg transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400">下書きに戻す</button>
                 <button type="submit" name="release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-400">今すぐ公開</button>
-                <button type="submit" name="reservation_release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-amber-500 rounded-md hover:bg-amber-400">予約日時を変更</button>
+                <button formaction="{{ route('reservation.post.edit', ['post_id' => $post->id]) }}" formmethod="GET" name="reservation_release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-amber-500 rounded-md hover:bg-amber-400">予約日時を変更</button>
             @else
                 <button type="submit" name="save_draft" class="px-4 py-2 text-white text-lg transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400">下書き保存</button>
                 <button type="submit" name="release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-400">更新して公開</button>
-                <button type="submit" name="reservation_release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-amber-500 rounded-md hover:bg-amber-400">予約公開</button>
+                <button formaction="{{ route('reservation.post.edit', ['post_id' => $post->id]) }}" formmethod="GET" name="reservation_release" class="px-4 py-2 ml-8 text-white text-lg transition-colors duration-200 transform bg-amber-500 rounded-md hover:bg-amber-400">予約公開</button>
             @endif
         </div>
     </div>

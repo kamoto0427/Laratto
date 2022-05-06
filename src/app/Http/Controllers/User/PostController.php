@@ -143,11 +143,6 @@ class PostController extends Controller
                 $this->post->updatePostToRelease($request, $post);
                 $request->session()->flash('updateRelease', '記事を更新し公開しました。');
                 break;
-            // 予約公開クリック時の処理
-            case $request->has('reservation_release'):
-                $this->post->updatePostToReservationRelease($request, $post);
-                $request->session()->flash('updateReservationRelease', '記事を予約公開で更新しました。');
-                break;
             // 上記以外の処理
             default:
                 $this->post->updatePostToSaveDraft($request, $post);
