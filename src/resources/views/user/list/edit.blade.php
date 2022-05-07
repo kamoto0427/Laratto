@@ -11,6 +11,13 @@
     <div class="bg-amber-200 text-center text-amber-700 font-bold">ステータス：予約公開</div>
 @else
 @endif
+
+@if (isset($date) && isset($time))
+    <div class="py-2 text-center">
+        <span class="px-4">予約公開日:{{ $date }}</span>
+        <span class="px-4">予約公開時間:{{ $time }}</span>
+    </div>
+@endif
 <form action="{{ route('post.update', ['post_id' => $post->id]) }}" method="POST" class="p-5">
 @csrf
     @if ($errors->any())

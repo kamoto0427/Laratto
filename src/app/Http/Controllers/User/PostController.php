@@ -109,13 +109,45 @@ class PostController extends Controller
      */
     public function edit($post_id)
     {
+        // ログインしているユーザー情報を取得
+        $user = Auth::user();
+        // ログインユーザー情報からユーザーIDを取得
+        $user_id = $user->id;
+
         // カテゴリーデータを全件取得
         $categories = $this->category->getAllCategories();
         // 投稿IDをもとに特定の投稿データを取得
         $post = $this->post->feachPostDateByPostId($post_id);
+
+        $date = null;
+        $time = null;
+        // 投稿IDをもとに予約公開データを取得
+        $reservationPost = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
+        if (isset($reservationPost)) {
+            // 年・月・日にそれぞれ文字を切り出し
+            // (20220530→2022)
+            $year = substr($reservationPost->reservation_date, 0, 4);
+            // (20220530→05)
+            $month = substr($reservationPost->reservation_date, 4, 2);
+            // (20220530→30)
+            $day = substr($reservationPost->reservation_date, 6, 2);
+            // 上記に年月日をつける(2022年05月30日)
+            $date = $year.'年'.$month.'月'.$day;
+
+            // 時・分にそれぞれ文字を切り出し
+            // (083200→08)
+            $hour = substr($reservationPost->reservation_time, 0, 2);
+            // (083200→32)
+            $minute = substr($reservationPost->reservation_time, 2, 2);
+            // 上記に時・分をつける
+            $time = $hour.'時'.$minute.'分';
+        }
+
         return view('user.list.edit', compact(
             'categories',
             'post',
+            'date',
+            'time'
         ));
     }
 
