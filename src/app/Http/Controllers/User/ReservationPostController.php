@@ -60,8 +60,10 @@ class ReservationPostController extends Controller
         $user = Auth::user();
         // ログインユーザー情報からユーザーIDを取得
         $user_id = $user->id;
+
         // 投稿データをpostsテーブルにinsert
         $post = $this->post->insertPostToReservationRelease($user_id, $request);
+
         // 画面で入力した予約設定_日付を取得
         $date = $request->reservation_date;
         // リクエストが2022-04-30とくるので、20220430に整形
@@ -72,14 +74,18 @@ class ReservationPostController extends Controller
         $minute = $request->reservation_minute;
         // 予約時間_時と予約時間_分を合体し、末尾に00をつけてデータを整形。ex.173100
         $reservation_time = $hour.$minute.'00';
+
         // 予約公開設定内容をreservation_postsテーブルにinsert
         $reservationPost = $this->reservationPost->insertReservationPostData(
             $post,
             $reservation_date,
             $reservation_time
         );
+
         // セッションにフラッシュメッセージを保存
         $request->session()->flash('reservationRelease', '記事を予約公開しました。');
+
+        // 投稿一覧にリダイレクト
         return to_route('user.index', ['id' => $user_id]);
     }
 
@@ -104,25 +110,45 @@ class ReservationPostController extends Controller
         // 15分リスト
         $minuteList = ['00', '15', '30', '45'];
 
+        // 投稿IDをもとに特定の投稿データを取得
+        $post = $this->post->feachPostDateByPostId($post_id);
         // ユーザーIDと投稿IDをもとに、予約公開する投稿データを取得
-        $post = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
+        $reservationPost = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
+
+        if (!isset($reservationPost)) {
+            $date = '';
+            $hour = '';
+            $minute = '';
+            return view('user.list.reservationEdit', compact(
+                'user_id',
+                'post_id',
+                'title',
+                'body',
+                'category',
+                'minuteList',
+                'date',
+                'hour',
+                'minute'
+            ));
+        }
 
         // ①先頭から4文字目にハイフンをつける(ex.20220430→2022-0430)一度で二箇所にハイフンつけられないので2回に分けた
-        $date = substr_replace($post->reservation_date, '-', 4, 0);
+        $date = substr_replace($reservationPost->reservation_date, '-', 4, 0);
         // ②先頭から7文字目にハイフンをつける(ex.2022-0430→2022-04-30)
         $date = substr_replace($date, '-', 7, 0);
 
         // reservation_timeから時を切り出し(ex.174500→17)
-        $hour = substr($post->reservation_time, 0, 2);
+        $hour = substr($reservationPost->reservation_time, 0, 2);
         // reservation_timeから分を切り出し(ex.174500→45)
-        $minute = substr($post->reservation_time, 2, 2);
+        $minute = substr($reservationPost->reservation_time, 2, 2);
         return view('user.list.reservationEdit', compact(
             'user_id',
+            'post_id',
             'title',
             'body',
             'category',
             'minuteList',
-            'post',
+            'reservationPost',
             'date',
             'hour',
             'minute'
@@ -147,8 +173,6 @@ class ReservationPostController extends Controller
         // 投稿データを更新
         $this->post->updatePostToReservationRelease($request, $post);
 
-        // ユーザーIDと投稿IDをもとに更新する予約公開記事のデータを1件取得
-        $reservationPost = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
         // 画面で入力した予約設定_日付を取得
         $date = $request->reservation_date;
         // リクエストが2022-04-30とくるので、20220430に整形
@@ -159,6 +183,26 @@ class ReservationPostController extends Controller
         $minute = $request->reservation_minute;
         // 予約時間_時と予約時間_分を合体し、末尾に00をつけてデータを整形。ex.173100
         $reservation_time = $hour.$minute.'00';
+
+        // ユーザーIDと投稿IDをもとに更新する予約公開記事のデータを1件取得
+        $reservationPost = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
+
+        // 下書き→公開予約する際、そもそも予約公開データはないので$reservationPostはnullになり、画面でエラーになる。そのため制御
+        if (!isset($reservationPost)) {
+            // 予約公開設定内容をreservation_postsテーブルにinsert
+            $this->reservationPost->insertReservationPostData(
+                $post,
+                $reservation_date,
+                $reservation_time
+            );
+
+            // セッションにフラッシュメッセージを格納
+            $request->session()->flash('updateReservationRelease', '記事を予約公開で更新しました。');
+
+            // 投稿一覧画面にリダイレクト
+            return to_route('user.index', ['id' => $user_id]);
+        }
+
         // 予約公開データを更新
         $this->reservationPost->updateReservationPost(
             $reservationPost,
