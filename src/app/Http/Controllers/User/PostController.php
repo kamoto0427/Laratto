@@ -7,17 +7,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\ReservationPost;
 use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
     private $post;
     private $category;
+    private $reservationPost;
 
     public function __construct()
     {
         $this->post = new Post();
         $this->category = new Category();
+        $this->reservationPost = new ReservationPost();
     }
 
     /**
@@ -135,12 +138,28 @@ class PostController extends Controller
         switch (true) {
             // 下書き保存クリック時の処理
             case $request->has('save_draft'):
+                // 記事のステータスを下書き(publish_flg=0)に更新
                 $this->post->updatePostToSaveDraft($request, $post);
+                // 投稿IDをもとに予約公開データを取得
+                $reservationPost = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
+                // 上記でもしデータがあれば、ステータスを下書きに戻すため予約公開データは不要のため削除する
+                if (isset($reservationPost)) {
+                    // 予約公開データの削除
+                    $this->reservationPost->deleteData($reservationPost);
+                }
                 $request->session()->flash('updateSaveDraft', '記事を下書き保存で更新しました。');
                 break;
             // 公開クリック時の処理
             case $request->has('release'):
+                // 記事のステータスを公開(publish_flg=1)に更新
                 $this->post->updatePostToRelease($request, $post);
+                // 投稿IDをもとに予約公開データを取得
+                $reservationPost = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
+                // 上記でもしデータがあれば、ステータスを下書きに戻すため予約公開データは不要のため削除する
+                if (isset($reservationPost)) {
+                    // 予約公開データの削除
+                    $this->reservationPost->deleteData($reservationPost);
+                }
                 $request->session()->flash('updateRelease', '記事を更新し公開しました。');
                 break;
             // 上記以外の処理
