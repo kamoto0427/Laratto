@@ -27,4 +27,21 @@ class ReservationPost extends Model
         'created_at',
         'updated_at'
     ];
+
+    /**
+     * 予約公開設定データをDBにinsert
+     *
+     * @param $post 投稿データ
+     * @param $reservation_date 予約公開_日付
+     * @param $reservation_time 予約公開_時間
+     */
+    public function insertReservationPostData($post, $reservation_date, $reservation_time)
+    {
+        return $this->create([
+            'user_id' => $post->user_id,
+            'post_id' => $post->id,
+            'reservation_date' => $reservation_date,
+            'reservation_time' => $reservation_time
+        ]);
+    }
 }
