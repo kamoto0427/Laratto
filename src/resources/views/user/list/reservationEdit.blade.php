@@ -5,7 +5,7 @@
 @section('content')
 <div class="p-5">
     <div class="font-bold text-2xl text-center">予約公開編集</div>
-    <form action="" method="" class="pt-12 text-center">
+    <form action="{{ route('reservation.post.update', ['post_id' => $post_id]) }}" method="POST" class="pt-12 text-center">
     @csrf
         <div class="pb-5 text-2xl underline decoration-dashed decoration-amber-500">予約公開日を変更する</div>
         <label for="reservation_date">日付を選択:</label>

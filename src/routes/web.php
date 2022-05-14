@@ -104,4 +104,7 @@ Route::controller(ReservationPostController::class)->group(function() {
     // 公開予約設定編集画面
     Route::get('/reservation/post/edit/{post_id}', 'reservationEdit')
         ->name('reservation.post.edit');
+    // 公開予約設定更新
+    Route::post('/reservation/post/edit/{post_id}', 'reservationUpdate')
+        ->name('reservation.post.update');
 });

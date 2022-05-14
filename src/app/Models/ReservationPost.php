@@ -59,4 +59,19 @@ class ReservationPost extends Model
         ])
         ->first();
     }
+
+    /**
+     * 予約公開データを更新
+     *
+     * @param $reservationPost 予約公開データ
+     * @param $reservation_date 予約日付
+     * @param $reservation_time 予約時間
+     */
+    public function updateReservationPost($reservationPost, $reservation_date, $reservation_time)
+    {
+        return $reservationPost->fill([
+            'reservation_date' => $reservation_date,
+            'reservation_time' => $reservation_time,
+        ])->save();
+    }
 }
