@@ -90,4 +90,75 @@ class ReservationPostController extends Controller
         // 記事一覧画面にリダイレクト
         return to_route('user.index', ['id' => $user_id]);
     }
+
+    /**
+     * 予約公開編集画面
+     *
+     * @param $request リクエストデータ
+     * @param $post_id 投稿ID
+     */
+    public function reservationEdit(Request $request, $post_id)
+    {
+        // ログインユーザー情報を取得
+        $user = Auth::user();
+        // ログインユーザーIDを取得
+        $user_id = $user->id;
+
+        // 投稿の編集画面で入力していた内容を取得
+        $title = $request->title;
+        $body  = $request->body;
+        $category = $request->category;
+
+        // 15分リスト
+        $minuteList = ['00', '15', '30', '45'];
+
+        // 投稿IDをもとに特定の投稿データを取得
+        $post = $this->post->feachPostDateByPostId($post_id);
+
+        // ユーザーIDと投稿IDをもとに、予約公開する投稿データを取得
+        $reservationPost = $this->reservationPost->getReservationPostByUserIdAndPostId($user_id, $post_id);
+
+        // 予約公開設定テーブルにユーザーIDと投稿IDで条件を絞ったデータが存在しない場合、エラーになるので、日付や時間は空にして画面に渡す
+        if (!isset($reservationPost)) {
+            $date = '';
+            $hour = '';
+            $minute = '';
+            return view('user.list.reservationEdit', compact(
+                'user_id',
+                'post_id',
+                'title',
+                'body',
+                'category',
+                'minuteList',
+                'date',
+                'hour',
+                'minute'
+            ));
+        }
+
+        // 予約公開設定データがある場合は以下の処理を実行
+        // ①先頭から4文字目にハイフンをつける(ex.20220430→2022-0430)一度で二箇所にハイフンつけられないので2回に分けた
+        $date = substr_replace($reservationPost->reservation_date, '-', 4, 0);
+        // ②先頭から7文字目にハイフンをつける(ex.2022-0430→2022-04-30)
+        $date = substr_replace($date, '-', 7, 0);
+
+        // reservation_timeから時を切り出し(ex.174500→17)
+        $hour = substr($reservationPost->reservation_time, 0, 2);
+        // reservation_timeから分を切り出し(ex.174500→45)
+        $minute = substr($reservationPost->reservation_time, 2, 2);
+
+        // 予約設定編集画面に遷移
+        return view('user.list.reservationEdit', compact(
+            'user_id',
+            'post_id',
+            'title',
+            'body',
+            'category',
+            'minuteList',
+            'reservationPost',
+            'date',
+            'hour',
+            'minute'
+        ));
+    }
 }
