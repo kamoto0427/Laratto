@@ -74,4 +74,14 @@ class ReservationPost extends Model
             'reservation_time' => $reservation_time,
         ])->save();
     }
+
+    /**
+     * 予約公開データの削除
+     *
+     * @param $reservationPost 予約公開データ
+     */
+    public function deleteData($reservationPost)
+    {
+        return $reservationPost->delete();
+    }
 }
